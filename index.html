@@ -75,6 +75,7 @@
     <div class="max-w-7xl mx-auto">
         <header class="text-center mb-8">
             <h1 class="text-4xl md:text-5xl font-bold mb-2 text-white">Horse Traits</h1>
+            <p class="text-gray-400 mt-2 text-lg italic">Priorities will differ depending on your use cases (rallies-open field)</p>
         </header>
 
         <div class="bg-gray-800 p-6 rounded-xl shadow-lg mb-8">
@@ -102,7 +103,7 @@
 
     <script>
         const csvData = `Tier,Item,,Class,Commander,Skill 1,Skill 2,Skill 3,Skill 4,Skill 5
-S+,Army Sunder,,Warrior Cavalry,Lü Bu,Gallant,Thunderbolt,Army Sunder,Dustbane,Renewal
+S+,Army Sunder,,Warrior Cavalry,Lü Bu,Gallant,Army Sunder,Dustbane,Renewal,
 S+,Bedrock,,Warrior Cavalry,Timur,Bedrock,Lifesaver,Fearless,Peacemaker,
 S,Overpower,,Warrior Cavalry,Attila,Bedrock,Fearless,Blade Sever,Peacemaker,
 S,Gallant,,Warrior Cavalry,Guan Yu,Gallant,Thunderbolt,Fearless,Bedrock,
@@ -110,30 +111,34 @@ S,Valor,,Warrior Cavalry,Rani,Bedrock,Fearless,Blade Sever,Peacemaker,
 S,Phalanx Breaker,,Warrior Archer,Mulan,Bedrock,Gallant,Army Sunder,Dustbane,Renewal
 S,Spiritbond,,Warrior Archer,Mehmed,Lifesaver,Fearless,Fearless,Dustbane,
 S,Strategem,,Warrior Archer,Bellevue,Gallant,Army Sunder,Dustbane,,
-A,Lifesaver,,Warrior Pikes,Cyrus,Valor,Lifesaver,Army Sunder,Dustbane,Bedrock
-A,Dustbane,,Warrior Pikes,Barbarossa,Lifesaver,Fearless,Bedrock,Dustbane,Peacemaker
-A,Fearless,,Warrior Pikes,Mansa Musa,Lifesaver,Fearless,Fearless,Bedrock,Valor
-B,Renewal,,Warrior Pikes,Boudica,Valor,Army Sunder,Dustbane,,
-B,Iron Ridge,,Warrior Pikes,Leonidas,Valor,Army Sunder,Dustbane,,
-B,Tactician,,Warrior Pikes,Richard,Valor,Army Sunder,Dustbane,,
+A,Lifesaver,,Warrior Pikemen,Cyrus,Valor,Lifesaver,Army Sunder,Dustbane,Bedrock
+A,Dustbane,,Warrior Pikemen,Barbarossa,Lifesaver,Fearless,Bedrock,Dustbane,Peacemaker
+A,Fearless,,Warrior Pikemen,Mansa Musa,Lifesaver,Fearless,Fearless,Bedrock,Valor
+B,Renewal,,Warrior Pikemen,Boudica,Valor,Army Sunder,Dustbane,,
+B,Iron Ridge,,Warrior Pikemen,Leonidas,Valor,Army Sunder,Dustbane,,
+B,Tactician,,Warrior Pikemen,Richard,Valor,Army Sunder,Dustbane,,
 ,,,Warrior Swords,Miyamoto,Overpower,Army Sunder,Dustbane,Fearless,
 ,,,Warrior Swords,Tribhuwana,Bedrock,Lifesaver,Fearless,,
 ,,,Warrior Swords,Lagertha,Overpower,Army Sunder,Dustbane,,
 ,,,Warrior Swords,Yodit,Overpower,Army Sunder,Dustbane,,
 ,,,Warrior Swords,Hammurabi,Fearless,Bedrock,Overpower,,
-,,,Marshal Pikes,Julius Caesar,Army Sunder,Phalanx Breaker,Bastion,Renewal,
-,,,Marshal Pikes,Ram Kham,Bedrock,Lifesaver,Bastion,Renewal,
-,,,Marshal Pikes,Octavian,Phalanx Breaker,Tidebreaker,Army Sunder,Bastion,
-,,,Marshal Pikes,Bushra,Bedrock,Lifesaver,Renewal,Bastion,
+,,,Marshal Pikemen,Julius Caesar,Army Sunder,Phalanx Breaker,Bastion,Renewal,
+,,,Marshal Pikemen,Ram Kham,Bedrock,Lifesaver,Bastion,Renewal,
+,,,Marshal Pikemen,Octavian,Phalanx Breaker,Tidebreaker,Army Sunder,Bastion,
+,,,Marshal Pikemen,Bushra,Bedrock,Lifesaver,Renewal,Bastion,
 D,Fierce,,Marshal Cavalry,El Cid,Gallant,Dustbane,Army Sunder,,
 D,Healing Armour,,Marshal Cavalry,Saladin,Fearless,Bedrock,Gallant,,
 D,Stalwart,,Marshal Cavalry,Tomyris,Bedrock,Renewal,Fearless,Lifesaver,
 D,Entrenchment,,Marshal Cavalry,Sejong,Lifesaver,Fearless,Renewal,Bedrock,
 F,Cunning,,Marshal Cavalry,Tariq,Gallant,Dustbane,Army Sunder,,
 F,Battlemaster,,Marshal Cavalry,YSG,Overpower,Army Sunder,Dustbane,,
-,,,Tactician Pikes,Elizabeth,Lifesaver,Fearless,Bedrock,,
-,,,Tactician Pikes,Belisarius,Strategem,Army Sunder,Dustbane,Fearless,
-,,,Tactician Pikes,Ashoka,Bedrock,Fearless,Gallant,,
+,,,Tactician Pikemen,Elizabeth,Lifesaver,Fearless,Bedrock,Renewal,
+,,,Tactician Pikemen,Belisarius,Strategem,Army Sunder,Dustbane,Fearless,
+,,,Tactician Pikemen,Ashoka,Bedrock,Fearless,Gallant,,
+,,,Tactician Cavalry,Hannibal,Iron Ridge,Army Sunder,Dustbane,Strategem,
+,,,Tactician Cavalry,Justinian,Lifesaver,Bedrock,Fearless,Renewal,
+,,,Tactician Cavalry,Cleopatra,Bedrock,Fearless,Strategem,,
+,,,Tactician Cavalry,Ashoka,Bedrock,Fearless,Gallant,,
 ,,,Tactician Swords & Archers,Ramesses,Spiritbond,Fearless,Iron Ridge,,
 ,,,Tactician Swords & Archers,Charlemagne,Bedrock,Fearless,Spiritbond,Blade Sever,
 ,,,Tactician Swords & Archers,Theodora,Bedrock,Fearless,Spiritbond,Blade Sever,
@@ -142,12 +147,7 @@ F,Battlemaster,,Marshal Cavalry,YSG,Overpower,Army Sunder,Dustbane,,
 ,,,Tactician Swords & Archers,YSS,Spiritbond,Army Sunder,Dustbane,Fearless,
 ,,,Tactician Swords & Archers,Phillip,Spiritbond,Army Sunder,Dustbane,Fearless,
 ,,,Tactician Swords & Archers,Seondeok,Spiritbond,
-,,,Tactician Cavalry,Hannibal,Iron Ridge,Army Sunder,Dustbane,Strategem,
-,,,Tactician Cavalry,Justinian,Lifesaver,Bedrock,Fearless,Renewal,
-,,,Tactician Cavalry,Cleopatra,Bedrock,Fearless,Strategem,,
-,,,Tactician Cavalry,Justinian,Lifesaver,Fearless,Bedrock,Renewal,
 B,Tactician,,,,,,,,,
-B,Thunderbolt,,,,,,,,,
 B,Tidebreaker,,,,,,,,,
 B,Bastion,,,,,,,,,
 C,Peacemaker,,,,,,,,,
@@ -156,7 +156,8 @@ C,Siege,,,,,,,,,
 C,Swift,,,,,,,,,
 C,Abundance,,,,,,,,,
 C,Full Stores,,,,,,,,,
-D,Perseverance,,,,,,,,,`;
+D,Perseverance,,,,,,,,,
+D,Thunderbolt,,,,,,,,,`;
 
         let data = [];
         const tierColors = {
