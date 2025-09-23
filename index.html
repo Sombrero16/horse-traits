@@ -210,11 +210,12 @@ D,Thunderbolt,,,,,,,,,`;
             const tiers = {};
             dataToRender.forEach(row => {
                 const tier = row['Tier'];
-                if (tier) {
+                const item = row['Item'];
+                if (tier && item) {
                     if (!tiers[tier]) {
                         tiers[tier] = [];
                     }
-                    tiers[tier].push(row);
+                    tiers[tier].push(item);
                 }
             });
 
@@ -235,7 +236,7 @@ D,Thunderbolt,,,,,,,,,`;
                     tiers[tier].forEach(item => {
                         const listItem = document.createElement('li');
                         // No hero names in the tier list
-                        listItem.textContent = item['Item'];
+                        listItem.textContent = item;
                         list.appendChild(listItem);
                     });
                     
@@ -268,7 +269,7 @@ D,Thunderbolt,,,,,,,,,`;
 
             classOrder.forEach(className => {
                 const marchData = classes[className];
-                if (marchData) {
+                if (marchData && marchData.length > 0) {
                     const section = document.createElement('div');
                     section.className = 'p-6 rounded-xl shadow-lg border border-gray-700';
                     
@@ -334,13 +335,25 @@ D,Thunderbolt,,,,,,,,,`;
 
         function handleSearch(event) {
             const searchTerm = event.target.value.toLowerCase();
-            const filteredData = data.filter(row => {
-                return Object.values(row).some(value => 
-                    String(value).toLowerCase().includes(searchTerm)
-                );
+            
+            // Filter for traits that match the search term
+            const filteredTraits = data.filter(row => {
+                const item = row['Item'];
+                return row['Tier'] && item && item.toLowerCase().includes(searchTerm);
             });
-            renderTierList(data);
-            renderMarchTables(filteredData);
+
+            // Filter for commanders that match the search term or have traits that match
+            const filteredCommanders = data.filter(row => {
+                const commander = row['Commander'];
+                const traits = row['Traits'];
+                if (commander) { // Only check rows that have a commander
+                    return commander.toLowerCase().includes(searchTerm) || traits.toLowerCase().includes(searchTerm);
+                }
+                return false;
+            });
+
+            renderTierList(filteredTraits);
+            renderMarchTables(filteredCommanders);
         }
 
         document.addEventListener('DOMContentLoaded', () => {
