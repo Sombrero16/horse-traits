@@ -45,13 +45,14 @@
             border-radius: 0.5rem;
             padding: 1rem;
             margin-bottom: 1rem;
+            background-color: #2d3748; /* Neutral background for the card body */
         }
-        .tier-card h2 {
+        .tier-header {
             font-weight: 700;
             font-size: 1.25rem;
-            border-bottom: 2px solid #4a5568;
-            padding-bottom: 0.5rem;
-            margin-bottom: 0.5rem;
+            padding: 0.5rem 1rem;
+            margin: -1rem -1rem 1rem -1rem; /* Adjust for padding of the parent */
+            border-radius: 0.5rem 0.5rem 0 0;
         }
         /* Tier Colors */
         .tier-Splus { background-color: #dc2626; } /* red */
@@ -61,8 +62,7 @@
         .tier-C { background-color: #22c55e; } /* green */
         .tier-D { background-color: #d1d5db; color: #1f2937; } /* lighter toned gray */
         .tier-E { background-color: #e5e7eb; color: #1f2937; } /* white/light gray */
-        .tier-F { background-color: #ffffff; } /* white */
-        .tier-F li { color: #2c2c1a; } /* dark brown/black */
+        .tier-F { background-color: #ffffff; color: #1f2937; } /* white header with dark text */
 
         /* March Type Colors */
         .march-warrior { background-color: #dc2626; } /* red */
@@ -224,10 +224,11 @@ D,Thunderbolt,,,,,,,,,`;
             tierOrder.forEach(tier => {
                 if (tiers[tier] && tiers[tier].length > 0) {
                     const card = document.createElement('div');
-                    card.className = `tier-card ${tierColors[tier] || 'bg-gray-800'}`;
+                    card.className = `tier-card`;
                     
                     const heading = document.createElement('h2');
                     heading.textContent = `Tier ${tier}`;
+                    heading.className = `tier-header ${tierColors[tier] || ''}`;
                     card.appendChild(heading);
 
                     const list = document.createElement('ul');
