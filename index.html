@@ -73,9 +73,14 @@
 <body class="p-4 md:p-8">
 
     <div class="max-w-7xl mx-auto">
-        <header class="text-center mb-8">
-            <h1 class="text-4xl md:text-5xl font-bold mb-2 text-white">Horse Traits</h1>
-            <p class="text-gray-400 mt-2 text-lg italic">Priorities will differ depending on your use cases (rallies-open field)</p>
+        <header class="mb-8 flex flex-col md:flex-row items-center justify-center gap-4">
+            <div class="text-center">
+                <h1 class="text-4xl md:text-5xl font-bold mb-2 text-white">Horse Traits</h1>
+                <p class="gray-400 mt-2 text-lg italic">Priorities will differ depending on your use cases (rallies-open field)</p>
+            </div>
+            <div class="flex justify-center mt-4 md:mt-0">
+                <img src="https://github.com/Sombrero16/horse-traits/blob/main/assets/pictures/image01.jpg?raw=true" alt="Decorative horse head illustration" class="w-full max-w-[150px] rounded-lg border border-gray-600" />
+            </div>
         </header>
 
         <div class="bg-gray-800 p-6 rounded-xl shadow-lg mb-8">
@@ -117,11 +122,11 @@ A,Fearless,,Warrior Pikemen,Mansa Musa,Lifesaver,Fearless,Fearless,Bedrock,Valor
 B,Renewal,,Warrior Pikemen,Boudica,Valor,Army Sunder,Dustbane,,
 B,Iron Ridge,,Warrior Pikemen,Leonidas,Valor,Army Sunder,Dustbane,,
 B,Tactician,,Warrior Pikemen,Richard,Valor,Army Sunder,Dustbane,,
-,,,Warrior Swords,Miyamoto,Overpower,Army Sunder,Dustbane,Fearless,
-,,,Warrior Swords,Tribhuwana,Bedrock,Lifesaver,Fearless,,
-,,,Warrior Swords,Lagertha,Overpower,Army Sunder,Dustbane,,
-,,,Warrior Swords,Yodit,Overpower,Army Sunder,Dustbane,,
-,,,Warrior Swords,Hammurabi,Fearless,Bedrock,Overpower,,
+,,,Warrior Swordsmen,Miyamoto,Overpower,Army Sunder,Dustbane,Fearless,
+,,,Warrior Swordsmen,Tribhuwana,Bedrock,Lifesaver,Fearless,,
+,,,Warrior Swordsmen,Lagertha,Overpower,Army Sunder,Dustbane,,
+,,,Warrior Swordsmen,Yodit,Overpower,Army Sunder,Dustbane,,
+,,,Warrior Swordsmen,Hammurabi,Fearless,Bedrock,Overpower,,
 ,,,Marshal Pikemen,Julius Caesar,Army Sunder,Phalanx Breaker,Bastion,Renewal,
 ,,,Marshal Pikemen,Ram Kham,Bedrock,Lifesaver,Bastion,Renewal,
 ,,,Marshal Pikemen,Octavian,Phalanx Breaker,Tidebreaker,Army Sunder,Bastion,
@@ -139,14 +144,14 @@ F,Battlemaster,,Marshal Cavalry,YSG,Overpower,Army Sunder,Dustbane,,
 ,,,Tactician Cavalry,Justinian,Lifesaver,Bedrock,Fearless,Renewal,
 ,,,Tactician Cavalry,Cleopatra,Bedrock,Fearless,Strategem,,
 ,,,Tactician Cavalry,Ashoka,Bedrock,Fearless,Gallant,,
-,,,Tactician Swords & Archers,Ramesses,Spiritbond,Fearless,Iron Ridge,,
-,,,Tactician Swords & Archers,Charlemagne,Bedrock,Fearless,Spiritbond,Blade Sever,
-,,,Tactician Swords & Archers,Theodora,Bedrock,Fearless,Spiritbond,Blade Sever,
-,,,Tactician Swords & Archers,Suleiman,Spiritbond,Army Sunder,Dustbane,,
-,,,Tactician Swords & Archers,Sun Tzu,Spiritbond,Army Sunder,Dustbane,,
-,,,Tactician Swords & Archers,YSS,Spiritbond,Army Sunder,Dustbane,Fearless,
-,,,Tactician Swords & Archers,Phillip,Spiritbond,Army Sunder,Dustbane,Fearless,
-,,,Tactician Swords & Archers,Seondeok,Spiritbond,
+,,,Tactician Swordsmen & Archers,Ramesses,Spiritbond,Fearless,Iron Ridge,,
+,,,Tactician Swordsmen & Archers,Charlemagne,Bedrock,Fearless,Spiritbond,Blade Sever,
+,,,Tactician Swordsmen & Archers,Theodora,Bedrock,Fearless,Spiritbond,Blade Sever,
+,,,Tactician Swordsmen & Archers,Suleiman,Spiritbond,Army Sunder,Dustbane,,
+,,,Tactician Swordsmen & Archers,Sun Tzu,Spiritbond,Army Sunder,Dustbane,,
+,,,Tactician Swordsmen & Archers,YSS,Spiritbond,Army Sunder,Dustbane,Fearless,
+,,,Tactician Swordsmen & Archers,Phillip,Spiritbond,Army Sunder,Dustbane,Fearless,
+,,,Tactician Swordsmen & Archers,Seondeok,Spiritbond,
 B,Tactician,,,,,,,,,
 B,Tidebreaker,,,,,,,,,
 B,Bastion,,,,,,,,,
@@ -178,18 +183,17 @@ D,Thunderbolt,,,,,,,,,`;
         };
 
         function parseCSV(csv) {
-            const rows = csv.trim().split('\n');
-            const headers = rows[0].split(',').map(header => header.trim()).filter(Boolean);
-            const dataRows = rows.slice(1);
+            const rows = csv.trim().split('\n').slice(1);
             
-            return dataRows.map(row => {
+            return rows.map(row => {
                 const values = row.split(',').map(v => v.trim());
                 let rowData = {};
-                const cleanedValues = [values[0], values[1], values[3], values[4], values[5], values[6], values[7], values[8], values[9]].filter(v => v !== undefined);
-                
-                headers.forEach((header, index) => {
-                    rowData[header] = cleanedValues[index] || '';
-                });
+                rowData['Tier'] = values[0];
+                rowData['Item'] = values[1];
+                rowData['Class'] = values[3];
+                rowData['Commander'] = values[4];
+                const skills = [values[5], values[6], values[7], values[8], values[9]].filter(Boolean);
+                rowData['Traits'] = skills.join(' | ');
                 return rowData;
             });
         }
@@ -256,54 +260,76 @@ D,Thunderbolt,,,,,,,,,`;
                 }
             });
 
-            const tableHeaders = ['Commander', 'Skill 1', 'Skill 2', 'Skill 3', 'Skill 4', 'Skill 5'];
+            const classOrder = [
+              'Warrior Cavalry', 'Warrior Pikemen', 'Warrior Swordsmen', 'Warrior Archers', 
+              'Marshal Pikemen', 'Marshal Cavalry', 
+              'Tactician Pikemen', 'Tactician Cavalry', 'Tactician Swordsmen & Archers'
+            ];
 
-            for (const className in classes) {
+            classOrder.forEach(className => {
                 const marchData = classes[className];
-
-                const section = document.createElement('div');
-                section.className = 'p-6 rounded-xl shadow-lg border border-gray-700';
-                
-                const heading = document.createElement('h3');
-                const baseType = className.split(' ')[0]; // Get the first word (Warrior, Marshal, Tactician)
-                heading.className = `text-xl font-semibold mb-4 text-white p-2 rounded-md ${marchColors[baseType] || 'bg-gray-700'}`;
-                heading.textContent = className;
-                section.appendChild(heading);
-                
-                const table = document.createElement('table');
-                table.className = 'min-w-full divide-y divide-gray-700';
-                
-                const thead = document.createElement('thead');
-                const headerRow = document.createElement('tr');
-                tableHeaders.forEach(headerText => {
-                    const th = document.createElement('th');
-                    th.textContent = headerText;
-                    th.className = 'px-4 py-2 text-gray-300 font-medium tracking-wider';
-                    headerRow.appendChild(th);
-                });
-                thead.appendChild(headerRow);
-                table.appendChild(thead);
-                
-                const tbody = document.createElement('tbody');
-                tbody.className = 'divide-y divide-gray-700';
-                
-                marchData.forEach(row => {
-                    const tr = document.createElement('tr');
-                    tr.className = 'hover:bg-gray-700 transition-colors duration-200';
+                if (marchData) {
+                    const section = document.createElement('div');
+                    section.className = 'p-6 rounded-xl shadow-lg border border-gray-700';
                     
-                    tableHeaders.forEach(header => {
-                        const td = document.createElement('td');
-                        td.textContent = row[header];
-                        td.className = 'px-4 py-2';
-                        tr.appendChild(td);
+                    const heading = document.createElement('h3');
+                    const baseType = className.split(' ')[0];
+                    heading.className = `text-xl font-semibold mb-4 text-white p-2 rounded-md ${marchColors[baseType] || 'bg-gray-700'}`;
+                    heading.textContent = className;
+                    section.appendChild(heading);
+                    
+                    const tableWrapper = document.createElement('div');
+                    tableWrapper.className = 'overflow-x-auto';
+                    
+                    const table = document.createElement('table');
+                    table.className = 'min-w-full divide-y divide-gray-700';
+                    
+                    const thead = document.createElement('thead');
+                    const headerRow = document.createElement('tr');
+                    
+                    // Commander Header
+                    const commanderTh = document.createElement('th');
+                    commanderTh.textContent = 'Commander';
+                    commanderTh.className = 'px-4 py-2 text-gray-300 font-medium tracking-wider border-r border-gray-600';
+                    headerRow.appendChild(commanderTh);
+
+                    // Traits Header
+                    const traitsTh = document.createElement('th');
+                    traitsTh.textContent = 'Traits';
+                    traitsTh.className = 'px-4 py-2 text-gray-300 font-medium tracking-wider';
+                    headerRow.appendChild(traitsTh);
+
+                    thead.appendChild(headerRow);
+                    table.appendChild(thead);
+                    
+                    const tbody = document.createElement('tbody');
+                    tbody.className = 'divide-y divide-gray-700';
+                    
+                    marchData.forEach(row => {
+                        const tr = document.createElement('tr');
+                        tr.className = 'hover:bg-gray-700 transition-colors duration-200';
+                        
+                        // Commander cell
+                        const commanderTd = document.createElement('td');
+                        commanderTd.textContent = row['Commander'];
+                        commanderTd.className = 'px-4 py-2 border-r border-gray-600';
+                        tr.appendChild(commanderTd);
+
+                        // Traits cell
+                        const traitsTd = document.createElement('td');
+                        traitsTd.textContent = row['Traits'];
+                        traitsTd.className = 'px-4 py-2';
+                        tr.appendChild(traitsTd);
+
+                        tbody.appendChild(tr);
                     });
-                    tbody.appendChild(tr);
-                });
-                
-                table.appendChild(tbody);
-                section.appendChild(table);
-                container.appendChild(section);
-            }
+                    
+                    table.appendChild(tbody);
+                    tableWrapper.appendChild(table);
+                    section.appendChild(tableWrapper);
+                    container.appendChild(section);
+                }
+            });
         }
 
         function handleSearch(event) {
@@ -313,8 +339,8 @@ D,Thunderbolt,,,,,,,,,`;
                     String(value).toLowerCase().includes(searchTerm)
                 );
             });
-            renderTierList(data); // Always render tier list from full data
-            renderMarchTables(filteredData); // Filter only the march tables
+            renderTierList(data);
+            renderMarchTables(filteredData);
         }
 
         document.addEventListener('DOMContentLoaded', () => {
