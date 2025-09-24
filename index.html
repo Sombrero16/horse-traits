@@ -1,4 +1,4 @@
-<!DOCTYPE ahtml>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -13,9 +13,6 @@
             font-family: 'Inter', sans-serif;
             background-color: #1a202c; /* Dark background */
             color: #e2e8f0; /* Light text */
-        }
-        .table-container {
-            /* Tier list content should not be cut off */
         }
         th, td {
             padding: 1rem;
@@ -81,7 +78,7 @@
             <!-- Header Text -->
             <div class="text-center">
                 <h1 class="text-4xl md:text-5xl font-bold mb-2 text-white">Horse Traits</h1>
-                <p class="gray-400 mt-2 text-lg italic">Priorities will differ depending on your use cases (rallies/open field)</p>
+                <p class="text-gray-400 mt-2 text-lg italic">Priorities will differ depending on your use cases (rallies/open field)</p>
             </div>
             <!-- Right Image -->
             <div class="flex justify-center mt-4 md:mt-0">
@@ -95,7 +92,7 @@
 
         <div class="grid grid-cols-1 md:grid-cols-[auto,1fr] gap-8">
             <!-- Left Column: Tier List -->
-            <div class="md:col-span-1">
+            <div>
                 <h2 class="text-2xl font-bold mb-4 text-white">Tier List</h2>
                 <div id="tierListContainer">
                     <!-- Tier cards will be injected here by JavaScript -->
@@ -103,7 +100,7 @@
             </div>
 
             <!-- Right Column: March Type Tables -->
-            <div class="md:col-span-1">
+            <div>
                 <h2 class="text-2xl font-bold mb-4 text-white">March Types</h2>
                 <div id="marchTablesContainer" class="space-y-8">
                     <!-- Tables for each march type will be injected here by JavaScript -->
@@ -117,164 +114,160 @@
     </div>
 
     <script>
-        const csvData = `Tier,Item,,Class,Commander,Skill 1,Skill 2,Skill 3,Skill 4,Skill 5
-S+,Army Sunder,,Warrior Cavalry,Lü Bu,Gallant,Army Sunder,Dustbane,,
-S+,Bedrock,,Warrior Cavalry,Timur,Bedrock,Lifesaver,Fearless,Renewal,
-S,Overpower,,Warrior Cavalry,Attila,Bedrock,Fearless,Blade Sever,Peacemaker,
-S,Gallant,,Warrior Cavalry,Guan Yu,Gallant,Fearless,Bedrock,,
-S,Valor,,Warrior Cavalry,Rani,Bedrock,Fearless,Blade Sever,Peacemaker,
-S,Phalanx Breaker,,Warrior Archer,Mulan,Gallant,Army Sunder,Dustbane,,
-S,Spiritbond,,Warrior Archer,Mehmed,Bedrock,Lifesaver,Fearless,Renewal,
-S,Strategem,,Warrior Archer,Bellevue,Gallant,Army Sunder,Dustbane,,
-A,Lifesaver,,Warrior Pikemen,Cyrus,Valor,Army Sunder,Dustbane,,
-A,Fearless,,Warrior Pikemen,Mansa Musa,Lifesaver,Bedrock,Fearless,Valor,
-B,Renewal,,Warrior Pikemen,Boudica,Valor,Army Sunder,Dustbane,,
-A,Dustbane,,Warrior Pikemen,Barbarossa,Fearless,Bedrock,Peacemaker,,
-B,Iron Ridge,,Warrior Pikemen,Leonidas,Valor,Army Sunder,Dustbane,,
-B,Tactician,,Warrior Pikemen,Richard,Valor,Army Sunder,Dustbane,,
-,,,Warrior Pikemen,Joan,Lifesaver,Bedrock,Fearless,Valor,
-,,,Warrior Swordsmen,Miyamoto,Overpower,Army Sunder,Dustbane,,
-,,,Warrior Swordsmen,Tribhuwana,Bedrock,Lifesaver,Fearless,,
-,,,Warrior Swordsmen,Lagertha,Overpower,Army Sunder,Dustbane,,
-,,,Warrior Swordsmen,Yodit,Overpower,Army Sunder,Dustbane,,
-,,,Warrior Swordsmen,Hammurabi,Fearless,Bedrock,Overpower,Siege,
-,,,Warrior Swordsmen,Josephine,Gallant,Army Sunder,Dustbane,Siege,
-,,,Warrior Swordsmen,King Derrick,Overpower,Army Sunder,Dustbane,Siege,
-,,,Marshal Pikemen,Julius Caesar,Army Sunder,Phalanx Breaker,Bastion,Tidebreaker,
-,,,Marshal Pikemen,Ram Kham,Bedrock,Bastion,Renewal,,
-,,,Marshal Pikemen,Octavian,Phalanx Breaker,Tidebreaker,Army Sunder,Bastion,
-,,,Marshal Pikemen,Bushra,Bedrock,Renewal,Bastion,,
-,,,Marshal Swordsmen,Oda,Army Sunder,Phalanx Breaker,Dustbane,,
-,,,Marshal Swordsmen,Tokugawa,Renewal,Fearless,Bedrock,,,
-,,,Marshal Swordsmen,Toyotomi,Overpower,Army Sunder,Dustbane,,
-,,,Marshal Swordsmen,Dido,Fearless,Bedrock,Renewal,,,
-D,Fierce,,Marshal Cavalry,El Cid,Gallant,Dustbane,Army Sunder,,
-D,Healing Armour,,Marshal Cavalry,Saladin,Fearless,Bedrock,Gallant,,
-D,Stalwart,,Marshal Cavalry,Tomyris,Bedrock,Renewal,Fearless,,
-D,Entrenchment,,Marshal Cavalry,Sejong,Fearless,Renewal,Bedrock,,
-F,Cunning,,Marshal Cavalry,Tariq,Gallant,Dustbane,Army Sunder,,
-F,Battlemaster,,Marshal Cavalry,YSG,Overpower,Army Sunder,Dustbane,,
-,,,Tactician Pikemen,Elizabeth,Lifesaver,Fearless,Bedrock,,
-,,,Tactician Pikemen,Belisarius,Strategem,Army Sunder,Dustbane,,
-,,,Tactician Pikemen,Ashoka,Bedrock,Fearless,Gallant,,
-,,,Tactician Cavalry,Hannibal,Army Sunder,Dustbane,Strategem,,
-,,,Tactician Cavalry,Justinian,Bedrock,Fearless,Renewal,,
-,,,Tactician Cavalry,Ashoka,Bedrock,Fearless,Gallant,Iron Ridge,
-,,,Tactician Cavalry,Cleopatra,Bedrock,Fearless,Strategem,,
-,,,Tactician Swordsmen & Archers,Ramesses,Spiritbond,Dustbane,Fearless,Iron Ridge,
-,,,Tactician Swordsmen & Archers,Charlemagne,Bedrock,Fearless,Spiritbond,Blade Sever,
-,,,Tactician Swordsmen & Archers,Theodora,Bedrock,Fearless,Spiritbond,Blade Sever,
-,,,Tactician Swordsmen & Archers,Suleiman,Spiritbond,Army Sunder,Dustbane,,
-,,,Tactician Swordsmen & Archers,Sun Tzu,Spiritbond,Army Sunder,Dustbane,,
-,,,Tactician Swordsmen & Archers,YSS,Spiritbond,Army Sunder,Dustbane,Fearless,
-,,,Tactician Swordsmen & Archers,Phillip,Spiritbond,Army Sunder,Dustbane,Fearless,
-,,,Tactician Swordsmen & Archers,Seondeok,Spiritbond,Army Sunder,Dustbane,Fearless,
-B,Tidebreaker,,,,,,,,,
-B,Bastion,,,,,,,,,
-C,Peacemaker,,,,,,,,,
-C,Blade Sever,,,,,,,,,
-C,Siege,,,,,,,,,
-C,Swift,,,,,,,,,
-C,Abundance,,,,,,,,,
-C,Full Stores,,,,,,,,,
-D,Perseverance,,,,,,,,,
-D,Thunderbolt,,,,,,,,,`;
+        // --- DATA ---
+        // Data is now fully separated. marchData for commanders, tierData for tiered items.
+        
+        // Data for the "March Types" section (Commanders and their specific traits)
+        const marchData = [
+            { class: 'Warrior Cavalry', commander: 'Lü Bu', traits: ['Gallant', 'Army Sunder', 'Dustbane'] },
+            { class: 'Warrior Cavalry', commander: 'Timur', traits: ['Bedrock', 'Lifesaver', 'Fearless', 'Renewal'] },
+            { class: 'Warrior Cavalry', commander: 'Attila', traits: ['Bedrock', 'Fearless', 'Blade Sever', 'Peacemaker'] },
+            { class: 'Warrior Cavalry', commander: 'Guan Yu', traits: ['Gallant', 'Fearless', 'Bedrock'] },
+            { class: 'Warrior Cavalry', commander: 'Rani', traits: ['Bedrock', 'Fearless', 'Blade Sever', 'Peacemaker'] },
+            { class: 'Warrior Archer', commander: 'Mulan', traits: ['Gallant', 'Army Sunder', 'Dustbane'] },
+            { class: 'Warrior Archer', commander: 'Mehmed', traits: ['Bedrock', 'Lifesaver', 'Fearless', 'Renewal'] },
+            { class: 'Warrior Archer', commander: 'Bellevue', traits: ['Gallant', 'Army Sunder', 'Dustbane'] },
+            { class: 'Warrior Pikemen', commander: 'Cyrus', traits: ['Valor', 'Army Sunder', 'Dustbane'] },
+            { class: 'Warrior Pikemen', commander: 'Mansa Musa', traits: ['Lifesaver', 'Bedrock', 'Fearless', 'Valor'] },
+            { class: 'Warrior Pikemen', commander: 'Boudica', traits: ['Valor', 'Army Sunder', 'Dustbane'] },
+            { class: 'Warrior Pikemen', commander: 'Barbarossa', traits: ['Fearless', 'Bedrock', 'Peacemaker'] },
+            { class: 'Warrior Pikemen', commander: 'Leonidas', traits: ['Valor', 'Army Sunder', 'Dustbane'] },
+            { class: 'Warrior Pikemen', commander: 'Richard', traits: ['Valor', 'Army Sunder', 'Dustbane'] },
+            { class: 'Warrior Pikemen', commander: 'Joan', traits: ['Lifesaver', 'Bedrock', 'Fearless', 'Valor'] },
+            { class: 'Warrior Swordsmen', commander: 'Miyamoto', traits: ['Overpower', 'Army Sunder', 'Dustbane'] },
+            { class: 'Warrior Swordsmen', commander: 'Tribhuwana', traits: ['Bedrock', 'Lifesaver', 'Fearless'] },
+            { class: 'Warrior Swordsmen', commander: 'Lagertha', traits: ['Overpower', 'Army Sunder', 'Dustbane'] },
+            { class: 'Warrior Swordsmen', commander: 'Yodit', traits: ['Overpower', 'Army Sunder', 'Dustbane'] },
+            { class: 'Warrior Swordsmen', commander: 'Hammurabi', traits: ['Fearless', 'Bedrock', 'Overpower', 'Siege'] },
+            { class: 'Warrior Swordsmen', commander: 'Josephine', traits: ['Gallant', 'Army Sunder', 'Dustbane', 'Siege'] },
+            { class: 'Warrior Swordsmen', commander: 'King Derrick', traits: ['Overpower', 'Army Sunder', 'Dustbane', 'Siege'] },
+            { class: 'Marshal Pikemen', commander: 'Julius Caesar', traits: ['Army Sunder', 'Phalanx Breaker', 'Bastion', 'Tidebreaker'] },
+            { class: 'Marshal Pikemen', commander: 'Ram Kham', traits: ['Bedrock', 'Bastion', 'Renewal'] },
+            { class: 'Marshal Pikemen', commander: 'Octavian', traits: ['Phalanx Breaker', 'Tidebreaker', 'Army Sunder', 'Bastion'] },
+            { class: 'Marshal Pikemen', commander: 'Bushra', traits: ['Bedrock', 'Renewal', 'Bastion'] },
+            { class: 'Marshal Swordsmen', commander: 'Oda', traits: ['Army Sunder', 'Phalanx Breaker', 'Dustbane'] },
+            { class: 'Marshal Swordsmen', commander: 'Tokugawa', traits: ['Renewal', 'Fearless', 'Bedrock'] },
+            { class: 'Marshal Swordsmen', commander: 'Toyotomi', traits: ['Overpower', 'Army Sunder', 'Dustbane'] },
+            { class: 'Marshal Swordsmen', commander: 'Dido', traits: ['Fearless', 'Bedrock', 'Renewal'] },
+            { class: 'Marshal Cavalry', commander: 'El Cid', traits: ['Gallant', 'Dustbane', 'Army Sunder'] },
+            { class: 'Marshal Cavalry', commander: 'Saladin', traits: ['Fearless', 'Bedrock', 'Gallant'] },
+            { class: 'Marshal Cavalry', commander: 'Tomyris', traits: ['Bedrock', 'Renewal', 'Fearless'] },
+            { class: 'Marshal Cavalry', commander: 'Sejong', traits: ['Fearless', 'Renewal', 'Bedrock'] },
+            { class: 'Marshal Cavalry', commander: 'Tariq', traits: ['Gallant', 'Dustbane', 'Army Sunder'] },
+            { class: 'Marshal Cavalry', commander: 'YSG', traits: ['Overpower', 'Army Sunder', 'Dustbane'] },
+            { class: 'Tactician Pikemen', commander: 'Elizabeth', traits: ['Lifesaver', 'Fearless', 'Bedrock'] },
+            { class: 'Tactician Pikemen', commander: 'Belisarius', traits: ['Strategem', 'Army Sunder', 'Dustbane'] },
+            { class: 'Tactician Pikemen', commander: 'Ashoka', traits: ['Bedrock', 'Fearless', 'Gallant'] },
+            { class: 'Tactician Cavalry', commander: 'Hannibal', traits: ['Army Sunder', 'Dustbane', 'Strategem'] },
+            { class: 'Tactician Cavalry', commander: 'Justinian', traits: ['Bedrock', 'Fearless', 'Renewal'] },
+            { class: 'Tactician Cavalry', commander: 'Ashoka', traits: ['Bedrock', 'Fearless', 'Gallant', 'Iron Ridge'] },
+            { class: 'Tactician Cavalry', commander: 'Cleopatra', traits: ['Bedrock', 'Fearless', 'Strategem'] },
+            { class: 'Tactician Swordsmen & Archers', commander: 'Ramesses', traits: ['Spiritbond', 'Dustbane', 'Fearless', 'Iron Ridge'] },
+            { class: 'Tactician Swordsmen & Archers', commander: 'Charlemagne', traits: ['Bedrock', 'Fearless', 'Spiritbond', 'Blade Sever'] },
+            { class: 'Tactician Swordsmen & Archers', commander: 'Theodora', traits: ['Bedrock', 'Fearless', 'Spiritbond', 'Blade Sever'] },
+            { class: 'Tactician Swordsmen & Archers', commander: 'Suleiman', traits: ['Spiritbond', 'Army Sunder', 'Dustbane'] },
+            { class: 'Tactician Swordsmen & Archers', commander: 'Sun Tzu', traits: ['Spiritbond', 'Army Sunder', 'Dustbane'] },
+            { class: 'Tactician Swordsmen & Archers', commander: 'YSS', traits: ['Spiritbond', 'Army Sunder', 'Dustbane', 'Fearless'] },
+            { class: 'Tactician Swordsmen & Archers', commander: 'Phillip', traits: ['Spiritbond', 'Army Sunder', 'Dustbane', 'Fearless'] },
+            { class: 'Tactician Swordsmen & Archers', commander: 'Seondeok', traits: ['Spiritbond', 'Army Sunder', 'Dustbane', 'Fearless'] },
+        ];
 
-        let data = [];
+        // Data for the "Tier List" section (standalone traits)
+        const tierData = [
+            { tier: 'S+', item: 'Army Sunder' },
+            { tier: 'S+', item: 'Bedrock' },
+            { tier: 'S', item: 'Overpower' },
+            { tier: 'S', item: 'Gallant' },
+            { tier: 'S', item: 'Valor' },
+            { tier: 'S', item: 'Phalanx Breaker' },
+            { tier: 'S', item: 'Spiritbond' },
+            { tier: 'S', item: 'Strategem' },
+            { tier: 'A', item: 'Lifesaver' },
+            { tier: 'A', item: 'Fearless' },
+            { tier: 'A', item: 'Dustbane' },
+            { tier: 'B', item: 'Renewal' },
+            { tier: 'B', item: 'Iron Ridge' },
+            { tier: 'B', item: 'Tactician' },
+            { tier: 'B', item: 'Tidebreaker' },
+            { tier: 'B', item: 'Bastion' },
+            { tier: 'C', item: 'Peacemaker' },
+            { tier: 'C', item: 'Blade Sever' },
+            { tier: 'C', item: 'Siege' },
+            { tier: 'C', item: 'Swift' },
+            { tier: 'C', item: 'Abundance' },
+            { tier: 'C', item: 'Full Stores' },
+            { tier: 'D', item: 'Fierce' },
+            { tier: 'D', item: 'Healing Armour' },
+            { tier: 'D', item: 'Stalwart' },
+            { tier: 'D', item: 'Entrenchment' },
+            { tier: 'D', item: 'Perseverance' },
+            { tier: 'D', item: 'Thunderbolt' },
+            { tier: 'F', item: 'Cunning' },
+            { tier: 'F', item: 'Battlemaster' },
+        ];
+
+
+        // --- CONFIGURATION ---
         const tierColors = {
-            'S+': 'tier-Splus',
-            'S': 'tier-S',
-            'A': 'tier-A',
-            'B': 'tier-B',
-            'C': 'tier-C',
-            'D': 'tier-D',
-            'E': 'tier-E',
-            'F': 'tier-F',
+            'S+': 'tier-Splus', 'S': 'tier-S', 'A': 'tier-A', 'B': 'tier-B',
+            'C': 'tier-C', 'D': 'tier-D', 'E': 'tier-E', 'F': 'tier-F',
         };
-
         const marchColors = {
-            'Warrior': 'march-warrior',
-            'Marshal': 'march-marshal',
-            'Tactician': 'march-tactician',
+            'Warrior': 'march-warrior', 'Marshal': 'march-marshal', 'Tactician': 'march-tactician',
         };
+        const tierOrder = ['S+', 'S', 'A', 'B', 'C', 'D', 'E', 'F'];
+        const classOrder = [
+            'Warrior Cavalry', 'Warrior Pikemen', 'Warrior Swordsmen', 'Warrior Archers', 
+            'Marshal Pikemen', 'Marshal Cavalry', 'Marshal Swordsmen', 
+            'Tactician Pikemen', 'Tactician Cavalry', 'Tactician Swordsmen & Archers'
+        ];
 
-        function parseCSV(csv) {
-            const rows = csv.trim().split('\n').slice(1);
-            
-            return rows.map(row => {
-                const values = row.split(',').map(v => v.trim());
-                let rowData = {};
-                rowData['Tier'] = values[0];
-                rowData['Item'] = values[1];
-                rowData['Class'] = values[3];
-                rowData['Commander'] = values[4];
-                const skills = [values[5], values[6], values[7], values[8], values[9]].filter(Boolean);
-                rowData['Traits'] = skills.join(' | ');
-                return rowData;
-            });
+        // --- RENDER FUNCTIONS ---
+        function renderAll() {
+            // The tier list now only needs to display data from the tierData source.
+            renderTierList(tierData);
+            // The march tables only display data from the marchData source.
+            renderMarchTables(marchData);
         }
 
-        function renderAll(dataToRender) {
-            renderTierList(dataToRender);
-            renderMarchTables(dataToRender);
-        }
-
-        function renderTierList(dataToRender) {
+        function renderTierList(data) {
             const container = document.getElementById('tierListContainer');
-            container.innerHTML = '';
-            
             const tiers = {};
-            dataToRender.forEach(row => {
-                const tier = row['Tier'];
-                const item = row['Item'];
-                if (tier && item) {
-                    if (!tiers[tier]) {
-                        tiers[tier] = [];
+
+            data.forEach(row => {
+                if (row.tier && row.item) {
+                    if (!tiers[row.tier]) {
+                        tiers[row.tier] = [];
                     }
-                    tiers[tier].push(item);
+                    // Prevent duplicates in the tier list
+                    if (!tiers[row.tier].includes(row.item)) {
+                        tiers[row.tier].push(row.item);
+                    }
                 }
             });
 
-            const tierOrder = ['S+', 'S', 'A', 'B', 'C', 'D', 'E', 'F'];
-
-            tierOrder.forEach(tier => {
-                if (tiers[tier] && tiers[tier].length > 0) {
-                    const card = document.createElement('div');
-                    card.className = `tier-card`;
-                    
-                    const heading = document.createElement('h2');
-                    heading.textContent = `Tier ${tier}`;
-                    heading.className = `tier-header ${tierColors[tier] || ''}`;
-                    card.appendChild(heading);
-
-                    const list = document.createElement('ul');
-                    list.className = 'list-disc list-inside space-y-1 text-gray-100';
-                    
-                    tiers[tier].forEach(item => {
-                        const listItem = document.createElement('li');
-                        // No hero names in the tier list
-                        listItem.textContent = item;
-                        list.appendChild(listItem);
-                    });
-                    
-                    card.appendChild(list);
-                    container.appendChild(card);
-                }
-            });
+            container.innerHTML = tierOrder.map(tier => {
+                if (!tiers[tier] || tiers[tier].length === 0) return '';
+                
+                const itemsHtml = tiers[tier].map(item => `<li>${item}</li>`).join('');
+                
+                return `
+                    <div class="tier-card">
+                        <h2 class="tier-header ${tierColors[tier] || ''}">Tier ${tier}</h2>
+                        <ul class="list-disc list-inside space-y-1 text-gray-100">${itemsHtml}</ul>
+                    </div>
+                `;
+            }).join('');
         }
 
-        function renderMarchTables(dataToRender) {
+        function renderMarchTables(data) {
             const container = document.getElementById('marchTablesContainer');
-            container.innerHTML = '';
-
             const classes = {};
-            dataToRender.forEach(row => {
-                let className = row['Class'];
-                if (className) {
-                    // Normalize the data name for display
-                    if (className === 'Warrior Archer') {
-                        className = 'Warrior Archers';
-                    }
+
+            data.forEach(row => {
+                if (row.class && row.commander) {
+                    // Normalize the class name for grouping
+                    const className = row.class === 'Warrior Archer' ? 'Warrior Archers' : row.class;
                     if (!classes[className]) {
                         classes[className] = [];
                     }
@@ -282,106 +275,72 @@ D,Thunderbolt,,,,,,,,,`;
                 }
             });
 
-            const classOrder = [
-              'Warrior Cavalry', 'Warrior Pikemen', 'Warrior Swordsmen', 'Warrior Archers', 
-              'Marshal Pikemen', 'Marshal Cavalry', 'Marshal Swordsmen', 
-              'Tactician Pikemen', 'Tactician Cavalry', 'Tactician Swordsmen & Archers'
-            ];
+            container.innerHTML = classOrder.map(className => {
+                const marchDataForClass = classes[className];
+                if (!marchDataForClass || marchDataForClass.length === 0) return '';
+                
+                const baseType = className.split(' ')[0];
+                const rowsHtml = marchDataForClass.map(row => `
+                    <tr class="hover:bg-gray-700 transition-colors duration-200">
+                        <td class="px-4 py-2 border-r border-gray-600">${row.commander}</td>
+                        <td class="px-4 py-2">${(row.traits || []).join(' | ')}</td>
+                    </tr>
+                `).join('');
 
-            classOrder.forEach(className => {
-                const marchData = classes[className];
-                if (marchData && marchData.length > 0) {
-                    const section = document.createElement('div');
-                    section.className = 'p-6 rounded-xl shadow-lg border border-gray-700';
-                    
-                    const heading = document.createElement('h3');
-                    const baseType = className.split(' ')[0];
-                    heading.className = `text-xl font-semibold mb-4 text-white p-2 rounded-md ${marchColors[baseType] || 'bg-gray-700'}`;
-                    heading.textContent = className;
-                    section.appendChild(heading);
-                    
-                    const tableWrapper = document.createElement('div');
-                    tableWrapper.className = 'overflow-x-auto';
-                    
-                    const table = document.createElement('table');
-                    table.className = 'min-w-full divide-y divide-gray-700';
-                    
-                    const thead = document.createElement('thead');
-                    const headerRow = document.createElement('tr');
-                    
-                    // Commander Header
-                    const commanderTh = document.createElement('th');
-                    commanderTh.textContent = 'Commander';
-                    commanderTh.className = 'px-4 py-2 text-gray-300 font-medium tracking-wider border-r border-gray-600';
-                    headerRow.appendChild(commanderTh);
-
-                    // Traits Header
-                    const traitsTh = document.createElement('th');
-                    traitsTh.textContent = 'Traits';
-                    traitsTh.className = 'px-4 py-2 text-gray-300 font-medium tracking-wider';
-                    headerRow.appendChild(traitsTh);
-
-                    thead.appendChild(headerRow);
-                    table.appendChild(thead);
-                    
-                    const tbody = document.createElement('tbody');
-                    tbody.className = 'divide-y divide-gray-700';
-                    
-                    marchData.forEach(row => {
-                        const tr = document.createElement('tr');
-                        tr.className = 'hover:bg-gray-700 transition-colors duration-200';
-                        
-                        // Commander cell
-                        const commanderTd = document.createElement('td');
-                        commanderTd.textContent = row['Commander'];
-                        commanderTd.className = 'px-4 py-2 border-r border-gray-600';
-                        tr.appendChild(commanderTd);
-
-                        // Traits cell
-                        const traitsTd = document.createElement('td');
-                        traitsTd.textContent = row['Traits'];
-                        traitsTd.className = 'px-4 py-2';
-                        tr.appendChild(traitsTd);
-
-                        tbody.appendChild(tr);
-                    });
-                    
-                    table.appendChild(tbody);
-                    tableWrapper.appendChild(table);
-                    section.appendChild(tableWrapper);
-                    container.appendChild(section);
-                }
-            });
+                return `
+                    <div class="p-6 rounded-xl shadow-lg border border-gray-700">
+                        <h3 class="text-xl font-semibold mb-4 text-white p-2 rounded-md ${marchColors[baseType] || 'bg-gray-700'}">
+                            ${className}
+                        </h3>
+                        <div class="overflow-x-auto">
+                            <table class="min-w-full divide-y divide-gray-700">
+                                <thead>
+                                    <tr>
+                                        <th class="px-4 py-2 text-gray-300 font-medium tracking-wider border-r border-gray-600">Commander</th>
+                                        <th class="px-4 py-2 text-gray-300 font-medium tracking-wider">Traits</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="divide-y divide-gray-700">${rowsHtml}</tbody>
+                            </table>
+                        </div>
+                    </div>
+                `;
+            }).join('');
         }
 
+        // --- EVENT HANDLING ---
         function handleSearch(event) {
             const searchTerm = event.target.value.toLowerCase();
-            
-            // Filter for traits that match the search term
-            const filteredTraits = data.filter(row => {
-                const item = row['Item'];
-                return row['Tier'] && item && item.toLowerCase().includes(searchTerm);
-            });
 
-            // Filter for commanders that match the search term or have traits that match
-            const filteredCommanders = data.filter(row => {
-                const commander = row['Commander'];
-                const traits = row['Traits'];
-                if (commander) { // Only check rows that have a commander
-                    return commander.toLowerCase().includes(searchTerm) || traits.toLowerCase().includes(searchTerm);
-                }
-                return false;
+            // If search is empty, show everything
+            if (!searchTerm) {
+                renderAll();
+                return;
+            }
+
+            // Filter for the Tier List: matches items/traits from tier data
+            const filteredTraits = tierData.filter(row => 
+                row.item && row.item.toLowerCase().includes(searchTerm)
+            );
+
+            // Filter for the March Tables: matches commander or their traits from march data
+            const filteredCommanders = marchData.filter(row => {
+                if (!row.commander) return false;
+                const commanderMatch = row.commander.toLowerCase().includes(searchTerm);
+                const traitsMatch = (row.traits || []).join(' ').toLowerCase().includes(searchTerm);
+                return commanderMatch || traitsMatch;
             });
 
             renderTierList(filteredTraits);
             renderMarchTables(filteredCommanders);
         }
 
+        // --- INITIALIZATION ---
         document.addEventListener('DOMContentLoaded', () => {
-            data = parseCSV(csvData);
-            renderAll(data);
+            renderAll();
             document.getElementById('searchInput').addEventListener('input', handleSearch);
         });
     </script>
 </body>
 </html>
+
