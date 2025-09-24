@@ -115,7 +115,7 @@
 
     <script>
         // --- DATA ---
-        // Data is now fully separated. marchData for commanders, tierData for tiered items.
+        // marchData for commanders, tierData for tiered items.
         
         // Data for the "March Types" section (Commanders and their specific traits)
         const marchData = [
@@ -129,6 +129,7 @@
             { class: 'Warrior Archer', commander: 'Bellevue', traits: ['Gallant', 'Army Sunder', 'Dustbane'] },
             { class: 'Warrior Pikemen', commander: 'Cyrus', traits: ['Valor', 'Army Sunder', 'Dustbane'] },
             { class: 'Warrior Pikemen', commander: 'Mansa Musa', traits: ['Lifesaver', 'Bedrock', 'Fearless', 'Valor'] },
+            { class: 'Warrior Pikemen', commander: 'Vlad', traits: ['Valor', 'Army Sunder', 'Dustbane'] },
             { class: 'Warrior Pikemen', commander: 'Boudica', traits: ['Valor', 'Army Sunder', 'Dustbane'] },
             { class: 'Warrior Pikemen', commander: 'Barbarossa', traits: ['Fearless', 'Bedrock', 'Peacemaker'] },
             { class: 'Warrior Pikemen', commander: 'Leonidas', traits: ['Valor', 'Army Sunder', 'Dustbane'] },
@@ -144,12 +145,15 @@
             { class: 'Marshal Pikemen', commander: 'Julius Caesar', traits: ['Army Sunder', 'Phalanx Breaker', 'Bastion', 'Tidebreaker'] },
             { class: 'Marshal Pikemen', commander: 'Ram Kham', traits: ['Bedrock', 'Bastion', 'Renewal'] },
             { class: 'Marshal Pikemen', commander: 'Octavian', traits: ['Phalanx Breaker', 'Tidebreaker', 'Army Sunder', 'Bastion'] },
+            { class: 'Marshal Pikemen', commander: 'Otto', traits: ['Phalanx Breaker', 'Tidebreaker', 'Army Sunder', 'Bastion'] },
+            { class: 'Marshal Pikemen', commander: 'QSH', traits: ['Bedrock', 'Renewal', 'Bastion'] },
             { class: 'Marshal Pikemen', commander: 'Bushra', traits: ['Bedrock', 'Renewal', 'Bastion'] },
             { class: 'Marshal Swordsmen', commander: 'Oda', traits: ['Army Sunder', 'Phalanx Breaker', 'Dustbane'] },
             { class: 'Marshal Swordsmen', commander: 'Tokugawa', traits: ['Renewal', 'Fearless', 'Bedrock'] },
             { class: 'Marshal Swordsmen', commander: 'Toyotomi', traits: ['Overpower', 'Army Sunder', 'Dustbane'] },
             { class: 'Marshal Swordsmen', commander: 'Dido', traits: ['Fearless', 'Bedrock', 'Renewal'] },
             { class: 'Marshal Cavalry', commander: 'El Cid', traits: ['Gallant', 'Dustbane', 'Army Sunder'] },
+            { class: 'Marshal Cavalry', commander: 'Robin Hood', traits: ['Bedrock', 'Fearless', 'Gallant', 'Renewal'] },
             { class: 'Marshal Cavalry', commander: 'Saladin', traits: ['Fearless', 'Bedrock', 'Gallant'] },
             { class: 'Marshal Cavalry', commander: 'Tomyris', traits: ['Bedrock', 'Renewal', 'Fearless'] },
             { class: 'Marshal Cavalry', commander: 'Sejong', traits: ['Fearless', 'Renewal', 'Bedrock'] },
@@ -163,6 +167,7 @@
             { class: 'Tactician Cavalry', commander: 'Ashoka', traits: ['Bedrock', 'Fearless', 'Gallant', 'Iron Ridge'] },
             { class: 'Tactician Cavalry', commander: 'Cleopatra', traits: ['Bedrock', 'Fearless', 'Strategem'] },
             { class: 'Tactician Swordsmen & Archers', commander: 'Ramesses', traits: ['Spiritbond', 'Dustbane', 'Fearless', 'Iron Ridge'] },
+            { class: 'Tactician Swordsmen & Archers', commander: 'Zhuge Liang', traits: ['Bedrock', 'Fearless', 'Renewal', 'Spiritbond'] },
             { class: 'Tactician Swordsmen & Archers', commander: 'Charlemagne', traits: ['Bedrock', 'Fearless', 'Spiritbond', 'Blade Sever'] },
             { class: 'Tactician Swordsmen & Archers', commander: 'Theodora', traits: ['Bedrock', 'Fearless', 'Spiritbond', 'Blade Sever'] },
             { class: 'Tactician Swordsmen & Archers', commander: 'Suleiman', traits: ['Spiritbond', 'Army Sunder', 'Dustbane'] },
