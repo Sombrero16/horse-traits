@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE ahtml>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -79,7 +79,7 @@
                 <p class="gray-400 mt-2 text-lg italic">Priorities will differ depending on your use cases (rallies/open field)</p>
             </div>
             <div class="flex justify-center mt-4 md:mt-0">
-                <img src="https://github.com/Sombrero16/horse-traits/blob/main/assets/pictures/image01.jpg?raw=true" alt="Decorative horse head illustration" class="w-full max-w-[300px] rounded-lg border border-gray-600" />
+                <img src="https://github.com/Sombrero16/horse-traits/blob/main/assets/pictures/image02.jpg?raw=true" alt="Decorative horse head illustration" class="w-full max-w-[250px] rounded-lg border border-gray-600" />
             </div>
         </header>
 
@@ -105,6 +105,10 @@
             </div>
         </div>
     </div>
+    
+    <div class="flex justify-center mt-8">
+        <img src="https://github.com/Sombrero16/horse-traits/blob/main/assets/pictures/image03.jpg?raw=true" alt="Additional horse illustration" class="w-full max-w-3xl rounded-lg border border-gray-600" />
+    </div>
 
     <script>
         const csvData = `Tier,Item,,Class,Commander,Skill 1,Skill 2,Skill 3,Skill 4,Skill 5
@@ -114,11 +118,11 @@ S,Overpower,,Warrior Cavalry,Attila,Bedrock,Fearless,Blade Sever,Peacemaker,
 S,Gallant,,Warrior Cavalry,Guan Yu,Gallant,,Fearless,Bedrock,
 S,Valor,,Warrior Cavalry,Rani,Bedrock,Fearless,Blade Sever,Peacemaker,
 S,Phalanx Breaker,,Warrior Archer,Mulan,Bedrock,Gallant,Army Sunder,Dustbane,Renewal
-S,Spiritbond,,Warrior Archer,Mehmed,Lifesaver,Fearless,Fearless,Dustbane,
+S,Spiritbond,,Warrior Archer,Mehmed,Fearless,Fearless,Dustbane,,
 S,Strategem,,Warrior Archer,Bellevue,Gallant,Army Sunder,Dustbane,,
-A,Lifesaver,,Warrior Pikemen,Cyrus,Valor,Lifesaver,Army Sunder,Dustbane,Bedrock
-A,Dustbane,,Warrior Pikemen,Barbarossa,Lifesaver,Fearless,Bedrock,Dustbane,Peacemaker
+A,Dustbane,,Warrior Pikemen,Barbarossa,Fearless,Bedrock,Dustbane,Peacemaker,
 A,Fearless,,Warrior Pikemen,Mansa Musa,Lifesaver,Fearless,Fearless,Bedrock,Valor
+A,Lifesaver,,Warrior Pikemen,Cyrus,Valor,Lifesaver,Army Sunder,Dustbane,Bedrock
 B,Renewal,,Warrior Pikemen,Boudica,Valor,Army Sunder,Dustbane,,
 B,Iron Ridge,,Warrior Pikemen,Leonidas,Valor,Army Sunder,Dustbane,,
 B,Tactician,,Warrior Pikemen,Richard,Valor,Army Sunder,Dustbane,,
@@ -129,20 +133,20 @@ B,Tactician,,Warrior Pikemen,Richard,Valor,Army Sunder,Dustbane,,
 ,,,Warrior Swordsmen,Yodit,Overpower,Army Sunder,Dustbane,,
 ,,,Warrior Swordsmen,Hammurabi,Fearless,Bedrock,Overpower,,
 ,,,Marshal Pikemen,Julius Caesar,Army Sunder,Phalanx Breaker,Bastion,Renewal,
-,,,Marshal Pikemen,Ram Kham,Bedrock,Lifesaver,Bastion,Renewal,
+,,,Marshal Pikemen,Ram Kham,Bedrock,Bastion,Renewal,,
 ,,,Marshal Pikemen,Octavian,Phalanx Breaker,Tidebreaker,Army Sunder,Bastion,
-,,,Marshal Pikemen,Bushra,Bedrock,Lifesaver,Renewal,Bastion,
+,,,Marshal Pikemen,Bushra,Bedrock,Renewal,Bastion,,
 D,Fierce,,Marshal Cavalry,El Cid,Gallant,Dustbane,Army Sunder,,
 D,Healing Armour,,Marshal Cavalry,Saladin,Fearless,Bedrock,Gallant,,
-D,Stalwart,,Marshal Cavalry,Tomyris,Bedrock,Renewal,Fearless,Lifesaver,
-D,Entrenchment,,Marshal Cavalry,Sejong,Lifesaver,Fearless,Renewal,Bedrock,
+D,Stalwart,,Marshal Cavalry,Tomyris,Bedrock,Renewal,Fearless,,
+D,Entrenchment,,Marshal Cavalry,Sejong,Fearless,Renewal,Bedrock,,
 F,Cunning,,Marshal Cavalry,Tariq,Gallant,Dustbane,Army Sunder,,
 F,Battlemaster,,Marshal Cavalry,YSG,Overpower,Army Sunder,Dustbane,,
 ,,,Tactician Pikemen,Elizabeth,Lifesaver,Fearless,Bedrock,Renewal,
 ,,,Tactician Pikemen,Belisarius,Strategem,Army Sunder,Dustbane,Fearless,
 ,,,Tactician Pikemen,Ashoka,Bedrock,Fearless,Gallant,,
 ,,,Tactician Cavalry,Hannibal,Iron Ridge,Army Sunder,Dustbane,Strategem,
-,,,Tactician Cavalry,Justinian,Lifesaver,Bedrock,Fearless,Renewal,
+,,,Tactician Cavalry,Justinian,Bedrock,Fearless,Renewal,,
 ,,,Tactician Cavalry,Ashoka,Bedrock,Fearless,Gallant,,
 ,,,Tactician Cavalry,Cleopatra,Bedrock,Fearless,Strategem,,
 ,,,Tactician Swordsmen & Archers,Ramesses,Spiritbond,Fearless,Iron Ridge,,
@@ -253,8 +257,12 @@ D,Thunderbolt,,,,,,,,,`;
 
             const classes = {};
             dataToRender.forEach(row => {
-                const className = row['Class'];
+                let className = row['Class'];
                 if (className) {
+                    // Normalize the data name for display
+                    if (className === 'Warrior Archer') {
+                        className = 'Warrior Archers';
+                    }
                     if (!classes[className]) {
                         classes[className] = [];
                     }
